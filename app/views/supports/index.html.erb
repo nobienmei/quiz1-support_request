@@ -1,0 +1,30 @@
+<h1>Supporter</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>email</th>
+      <th>Department</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @supports.each do |support| %>
+      <tr>
+        <td><%= support.name %></td>
+        <td><%= support.email %></td>
+        <td><%= support.department %></td>
+        <td><%= support.message %></td>
+        <td><%= link_to 'Edit', edit_support_path(support) %></td>
+        <td><%= link_to 'Delete', support, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', support %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Message', new_support_path %>

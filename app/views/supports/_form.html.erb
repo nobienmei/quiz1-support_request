@@ -1,0 +1,26 @@
+<% if @support.errors.any? %>
+  <ul>
+  <% @support.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
+<% end %>
+
+<%= form_for@support do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <br>
+  <%= f.label :department %>
+  <%= f.text_field :department %>
+  <br>
+  <%= f.label :massage %>
+  <%= f.text_area :message %>
+  <br>
+
+
+  <%= f.submit "Save" %>
+
+<% end %>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %><%#= flash[:msg] %><%#= info %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @support.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @support.email %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @support.department %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @support.message %>
+</p>
+
+
+<%= link_to 'Edit', edit_support_path(@support) %> |
+<%= link_to 'Back', supports_path %>
