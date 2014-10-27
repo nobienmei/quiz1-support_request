@@ -1,75 +1,62 @@
 class SupportsController < ApplicationController
-  before_action :set_support, only: [:show, :edit, :update, :destroy]
+  before_action :get_ticket, only: [:edit, :update, :destroy, :mark_resolved, :mark_unresolved]
 
   def index
-    @supports = Support.all
-
-  end
-
-  def show
+    @supports = Support.paginate(:page => params[:page]).search(params[:search])
   end
 
   def new
     @support = Support.new
   end
 
+  def create
+    @support = Support.new(support_params)
+    if @support.save
+      redirect_to supports_path, notice: "Ticket created! Thank you for contacting us."
+    else
+      flash.now[:alert] = "Something went wrong when creating your ticket!"
+      render :new
+    end
+  end
+
   def edit
   end
 
-
-  def create
-
-    @support = Support.new(support_params)
-
-
-    respond_to do |format|
-      if @support.save
-        format.html { redirect_to @support, notice: 'Message was successfully created.' }
-
-        format.json { render action: 'show', status: :created, location: @support }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @support.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-
   def update
-    # sleep 3
-    respond_to do |format|
-      if @support.update(support_params)
-        format.html { redirect_to @support, notice: 'Message was successfully updated.' }
-        #format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        #format.json { render json: @support.errors, status: :unprocessable_entity }
-      end
+    if @support.update_attributes(support_params)
+      redirect_to supports_path, notice: "Ticket is updated."
+    else
+      flash.now[:alert] = "Something went wrong when updating your request!"
+      render :edit
     end
   end
 
-
-
-
- def destroy
+  def destroy
     @support.destroy
-    respond_to do |format|
-      format.html { redirect_to support_url }
-      #format.json { head :no_content }
-    end
+    redirect_to supports_path, notice: "Ticket successfully destroyed."
   end
 
+  def mark_resolved
+    @support.status = 1
+    @support.save
+    redirect_to supports_path
+  end
 
+  def mark_unresolved
+    @support.status = 0
+    @support.save
+    redirect_to supports_path
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_support
-      @support = Support.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def support_params
-      params.require(:support).permit(:name, :email, :department, :message)
-    end
+
+  def get_ticket
+    @support = Support.find(params[:id])
+  end
+
+  def support_params
+    params.require(:support).permit(:name, :email, :department, :message)
+  end
 
 end

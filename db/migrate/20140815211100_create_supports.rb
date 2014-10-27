@@ -5,7 +5,7 @@ class CreateSupports < ActiveRecord::Migration
       t.string :email
       t.string :department
       t.text :message
-
+      t.integer :status, default: 0
       t.timestamps
     end
   end

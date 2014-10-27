@@ -1,26 +1,37 @@
 <% if @support.errors.any? %>
   <ul>
-  <% @support.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
+    <% @support.errors.full_messages.each do |err| %>
+      <li><%= err %></li>
+    <% end %>
   </ul>
 <% end %>
 
-<%= form_for@support do |f| %>
+<%= form_for @support do |f| %>
+<div class="form-group">
   <%= f.label :name %>
-  <%= f.text_field :name %>
-  <br>
+  <%= f.text_field :name, class: "form-control" %>
+</div>
+
+<div class="form-group">
   <%= f.label :email %>
-  <%= f.text_field :email %>
-  <br>
-  <%= f.label :department %>
-  <%= f.text_field :department %>
-  <br>
-  <%= f.label :massage %>
-  <%= f.text_area :message %>
-  <br>
+  <%= f.email_field :email, class: "form-control" %>
+</div>
 
+<div class="form-group">
+  <%= f.label :department %> : 
+  <%= f.radio_button(:department, "Sales") %>
+  <%= f.label(:sales, "Sales") %>
+  <%= f.radio_button(:department, "Marketing") %>
+  <%= f.label(:marketing, "Marketing") %>
+  <%= f.radio_button(:department, "Technical") %>
+  <%= f.label(:technical, "Technical") %>
+</div>
 
-  <%= f.submit "Save" %>
+<div class="form-group">
+  <%= f.label :message %>
+  <%= f.text_area :message, class: "form-control" %>
+</div>
+
+<%= f.submit class: "btn btn-primary" %>
 
 <% end %>

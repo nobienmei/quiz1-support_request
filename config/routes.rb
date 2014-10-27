@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
     root "supports#index"
     resources :supports
+
+    get 'supports/:id/mark_resolved' => 'supports#mark_resolved'
+    get 'supports/:id/mark_unresolved' => 'supports#mark_unresolved'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
